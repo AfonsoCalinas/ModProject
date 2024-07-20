@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class Faction {
     private final String name;
-    private final UUID leader;
+    private UUID leader;
     private final Set<UUID> members;
 
     public Faction(String name, UUID leader) {
@@ -18,6 +18,10 @@ public class Faction {
 
     public String getName() {
         return name;
+    }
+
+    public void setLeader(UUID newLeader) {
+        this.leader = newLeader;
     }
 
     public UUID getLeader() {

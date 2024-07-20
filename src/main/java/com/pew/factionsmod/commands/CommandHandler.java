@@ -43,6 +43,19 @@ public class CommandHandler {
                                     }
                                     return 1;
                                 }))
+                        .then(Commands.literal("list")
+                                .executes(context -> {
+                                    CommandSourceStack source = context.getSource();
+                                    if (factionManager.getFactions().isEmpty()) {
+                                        source.sendSuccess(Component.literal("There are no factions."), true);
+                                    } else {
+                                        source.sendSuccess(Component.literal("Factions:"), true);
+                                        for (Faction faction : factionManager.getFactions().values()) {
+                                            source.sendSuccess(Component.literal("- " + faction.getName()), true);
+                                        }
+                                    }
+                                    return 1;
+                                }))
                 // Add more commands for joining, leaving, etc.
         );
     }

@@ -21,11 +21,17 @@ public class Faction {
     }
 
     public void setLeader(UUID newLeader) {
-        this.leader = newLeader;
+        if (members.contains(newLeader)) {
+            this.leader = newLeader;
+        }
     }
 
     public UUID getLeader() {
         return leader;
+    }
+
+    public boolean isLeader(UUID player) {
+        return leader.equals(player);
     }
 
     public Set<UUID> getMembers() {

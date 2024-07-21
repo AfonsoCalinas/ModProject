@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class FactionManager {
     private final Map<String, Faction> factions = new HashMap<>();
+    private final Map<UUID, String> invitations = new HashMap<>();
 
     public Faction createFaction(String name, UUID leader) {
         if (factions.containsKey(name)) {
@@ -66,4 +67,30 @@ public class FactionManager {
         // For simplicity, we'll just return a random member here
         return members.get(new Random().nextInt(members.size()));
     }
+
+    public boolean invitePlayer(UUID inviter, UUID invitee) {
+        Faction faction = getFactionByPlayer(inviter);
+        if (faction != null && faction.isLeader(inviter)) {
+            invitations.put(invitee, faction.getName());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean acceptInvitation(UUID player) {
+        String factionName = invitations.remove(player);
+        if (factionName != null) {
+            Faction faction = getFaction(factionName);
+            if (faction != null) {
+                faction.addMember(player);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isInvited(UUID player) {
+        return invitations.containsKey(player);
+    }
+
 }
